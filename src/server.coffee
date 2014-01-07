@@ -35,6 +35,8 @@ io = require 'socket.io'
 events = require 'events'
 winston = require 'winston'
 express = require 'express'
+ansi_to_html = require 'ansi-to-html'
+converter = new ansi_to_html()
 
 class _LogObject
   _type: 'object'
@@ -234,7 +236,7 @@ class WebServer
         stream: stream.name
         node: node.name
         level: level
-        message: message
+        message: converter.toHtml message
 
     # Bind web client connection, events to web server
     @listener.on 'connection', (wclient) =>
